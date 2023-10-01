@@ -1,16 +1,14 @@
 using Chafear.UI.Inventory;
 using Chafear.Utils.InputSystem;
-using Chafear.Utils.Update;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace Chafear.UI.Utils
 {
 	[RequireComponent(typeof(Canvas))]
-	public class DragContext : MonoBehaviour, IDragService,ITickable
+	public class DragContext : MonoBehaviour, IDragService
 	{
 		[SerializeField] private List<InventoryPresenter> containers;
 		[SerializeField] private Canvas prefabDragCanvas;
@@ -18,7 +16,6 @@ namespace Chafear.UI.Utils
 		private Transform dragSpace;
 
 		private IInputSystem inputSystem;
-		//private IUpdateService updateService;
 		private IDraggable current;
 
 		private InputBind dropAction;
@@ -42,11 +39,6 @@ namespace Chafear.UI.Utils
 			};
 		}
 
-		private void OnDestroy( )
-		{
-			//updateService.OnUpdate -= ProcessDrag;
-		}
-
 		private void Update( )
 		{
 			ProcessDrag( );
@@ -56,8 +48,6 @@ namespace Chafear.UI.Utils
 		public void Construct( IInputSystem inputSystem )
 		{
 			this.inputSystem = inputSystem;
-			//this.updateService = updateService;
-			//updateService.OnUpdate += ProcessDrag;
 		}
 
 		public void StartDragFor( IDraggable dragObject )
@@ -125,11 +115,6 @@ namespace Chafear.UI.Utils
 			current = null;
 
 			inputSystem.UnSubscribe( dropAction );
-		}
-
-		public void Tick( )
-		{
-			throw new System.NotImplementedException( );
 		}
 	}
 }

@@ -14,21 +14,10 @@ namespace Chafear
 		{
 			this.loadCommander = loadCommander;
 		}
-		
-		//private void Start()
-		//{
-		//	ProjectContext.Instance.Initialize();
-		//	ProjectContext.Instance.LoadCommander.Load( new LoadInventoryCommand( ) );
-		//}
 
 		void IStartable.Start( )
 		{
 			loadCommander.Load( new LoadInventoryCommand( ) );
 		}
-
-		//void IStartable.Start( )
-		//{
-		//	loadCommander.Load( new LoadInventoryCommand( ) );
-		//}
 	}
 }
