@@ -19,7 +19,7 @@ namespace Chafear.UI.Inventory
 
 			foreach ( var item in ids.Except( highligtedCells ).ToList( ) )
 			{
-				var hoveredItem = inventory.Slots[item];
+				var hoveredItem = inventory.ItemsMap[item];
 				bool isOccupied = hoveredItem is not null;
 				cells[item].SetValidation( !isOccupied || (hoveredItem == draggingItem) );
 			}

@@ -3,7 +3,7 @@ using System;
 
 namespace Chafear.Inventory
 {
-	public sealed class Item : IItemInfo, IRefreshable
+	public sealed class Item : IItemInfo
 	{
 		private readonly SoItem data;
 

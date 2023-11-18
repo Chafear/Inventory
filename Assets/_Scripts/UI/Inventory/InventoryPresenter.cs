@@ -1,3 +1,4 @@
+using Chafear.Data;
 using Chafear.Inventory;
 using Chafear.Utils;
 using Chafear.Utils.InputSystem;
@@ -20,7 +21,7 @@ namespace Chafear.UI.Inventory
 		private IDraggable draggingItem;
 
 		private List<int> hoveredCells = new( );
-		private List<Item> hoveredOnItems = new( );
+		private List<IItemInfo> hoveredOnItems = new( );
 
 		private bool isShown = false;
 
@@ -124,7 +125,7 @@ namespace Chafear.UI.Inventory
 			hoveredOnItems.Clear( );
 			foreach ( var item in hoveredCells )
 			{
-				var hoveredItem = inventory.Slots[item];
+				var hoveredItem = inventory.ItemsMap[item];
 				if ( hoveredItem is null ) continue;
 				if ( hoveredItem == draggingItem.ItemInfo ) continue;
 				if ( hoveredOnItems.Contains( hoveredItem ) ) continue;

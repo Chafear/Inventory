@@ -1,4 +1,4 @@
-using Chafear.Inventory;
+using Chafear.Data;
 using Chafear.UI.Utils;
 using Chafear.Utils;
 using Chafear.Utils.InputSystem;
@@ -14,7 +14,7 @@ namespace Chafear.UI
 		[SerializeField] private Image pic;
 		[SerializeField] private RectTransform rect;
 
-		private Item item;
+		private IItemInfo item;
 		private InputBind rotateBind;
 
 		private IInputSystem inputSystem;
@@ -35,7 +35,7 @@ namespace Chafear.UI
 			if ( isDragging ) inputSystem.UnSubscribe( rotateBind );
 		}
 
-		public void Init( Item item, IAssetsProvider assetsProvider, IInputSystem inputSystem )
+		public void Init( IItemInfo item, IAssetsProvider assetsProvider, IInputSystem inputSystem )
 		{
 			this.item = item;
 			this.itemInfo = item;

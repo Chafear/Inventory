@@ -1,3 +1,4 @@
+using Chafear.Data;
 using Chafear.Inventory;
 using Chafear.Utils;
 using Chafear.Utils.InputSystem;
@@ -22,9 +23,9 @@ namespace Chafear.UI.Inventory
 
 		private MiniPool<InventoryItemView> pool;
 
-		private Dictionary<Item, InventoryItemView> viewByItem = new( );
+		private Dictionary<IItemInfo, InventoryItemView> viewByItem = new( );
 
-		public Dictionary<Item, InventoryItemView> ViewByItem => viewByItem;
+		public IReadOnlyDictionary<IItemInfo, InventoryItemView> ViewByItem => viewByItem;
 
 		private void Start( )
 		{
@@ -51,7 +52,7 @@ namespace Chafear.UI.Inventory
 			InventoryCellsView cellsView )
 		{
 			cellsView.ClearRarity( );
-			List<Item> cachedList = new( viewByItem.Keys );
+			List<IItemInfo> cachedList = new( viewByItem.Keys );
 			foreach ( var item in inventory.AllItems )
 			{
 				if ( !viewByItem.ContainsKey( item.Key ) )

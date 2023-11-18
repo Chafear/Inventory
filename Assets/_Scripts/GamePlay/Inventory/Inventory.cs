@@ -1,7 +1,6 @@
 using Chafear.Data;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Chafear.Inventory
 {
@@ -9,40 +8,39 @@ namespace Chafear.Inventory
 	{
 		private (int cols, int rows) size;
 
-		private Dictionary<Item, IEnumerable<int>> slotsByItem = new( );
-		private Item[] slots;
+		private Dictionary<IItemInfo, IEnumerable<int>> slotsByItem = new( );
+		private IItemInfo[] itemsMap;
 
 		public event Action OnChange;
 
-		public IReadOnlyList<Item> Slots => slots;
+		public IReadOnlyList<IItemInfo> ItemsMap => itemsMap;
 
-		public IReadOnlyDictionary<Item, IEnumerable<int>> AllItems => slotsByItem;
+		public IReadOnlyDictionary<IItemInfo, IEnumerable<int>> AllItems => slotsByItem;
 
 		public void Initilize( int cols, int rows )
 		{
-			slots = new Item[cols * rows];
+			itemsMap = new Item[cols * rows];
 			size = new ( cols, rows );
 		}
 
 		public void AddItemAtSlots( List<int> slotsToPlace, IItemInfo itemInfo )
 		{
-			Item item = itemInfo as Item;
-			foreach ( var slot in slotsToPlace ) slots[slot] = item;
-			slotsByItem.Add( item, slotsToPlace );
+			foreach ( var slot in slotsToPlace ) itemsMap[slot] = itemInfo;
+			slotsByItem.Add( itemInfo, slotsToPlace );
 			OnChange?.Invoke( );
 		}
 
-		public void RemoveItem( Item item )
+		public void RemoveItem( IItemInfo item )
 		{
 			foreach ( var slot in slotsByItem[item] )
 			{
-				if( slots[slot] == item ) slots[slot] = null;
+				if( itemsMap[slot] == item ) itemsMap[slot] = null;
 			}
 			slotsByItem.Remove( item );
 			OnChange?.Invoke( );
 		}
 
-		public void TryToAddItemAtFreeSlots( Item item )
+		public void TryToAddItemAtFreeSlots( IItemInfo item )
 		{
 			for ( int i = 0; i < size.rows; i++ )
 				for ( int j = 0; j < size.cols; j++ )
@@ -57,7 +55,7 @@ namespace Chafear.Inventory
 			AddItemAtSlots(slots, item );
 		}
 
-		private bool TryToFillAt( int col, int row, Item item )
+		private bool TryToFillAt( int col, int row, IItemInfo item )
 		{
 			List<int> fitSlots = new( );
 			for ( int i = 0; i < item.CurrentHeight; i++ )
@@ -66,12 +64,13 @@ namespace Chafear.Inventory
 				{
 					if ( !item.CurrentShape[j, i] ) continue;
 					if ( (col + j) >= size.cols || (row + i) >= size.rows ) return false;
-					if ( slots[col + j + (row + i) * size.cols] is not null ) return false;
+					if ( itemsMap[col + j + (row + i) * size.cols] is not null ) return false;
 					fitSlots.Add( col + j + (row + i) * size.cols );
 				}
 			}
 			AddItemAtSlots( fitSlots, item );
 			return true;
 		}
+
 	}
 }

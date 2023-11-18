@@ -7,9 +7,9 @@ namespace Chafear.Inventory
 	{
 		public void Initilize(int cols, int rows);
 		public void AddItemAtSlots( List<int> slots, IItemInfo itemInfo );
-		public void TryToAddItemAtFreeSlots( Item item );
-		public void RemoveItem( Item item );
-		public IReadOnlyList<Item> Slots { get; }
-		public IReadOnlyDictionary<Item, IEnumerable<int>> AllItems { get; }
+		public void TryToAddItemAtFreeSlots( IItemInfo item );
+		public void RemoveItem( IItemInfo item );
+		public IReadOnlyList<IItemInfo> ItemsMap { get; }
+		public IReadOnlyDictionary<IItemInfo, IEnumerable<int>> AllItems { get; }
 	}
 }

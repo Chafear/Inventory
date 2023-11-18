@@ -1,5 +1,4 @@
 using Chafear.Data;
-using Chafear.Inventory;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,7 +17,7 @@ namespace Chafear.UI.Utils
 
 		public GameObject GameObject => gameObject;
 
-		public Action<Item> OnDrop {  get; set; }
+		public Action<IItemInfo> OnDrop {  get; set; }
 
 		public IItemInfo ItemInfo => itemInfo;
 
